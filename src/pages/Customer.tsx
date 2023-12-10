@@ -63,9 +63,10 @@ const Customer = () => {
     setAnchorElUser(null);
   }
 
-  const handleSaveProfile = () => {
-    setShowProfile(false);
-    loadUserInfo();
+  const handleSaveProfile = async () => {
+    console.log("handleSaveProfile");
+    await loadUserInfo();
+    handleCloseProfile();
   }
 
   return (
@@ -90,12 +91,12 @@ const Customer = () => {
 
             <Box sx={{ flexGrow: 1 }}>
               {(currentUser != null && currentUser.seed != null) ? (
-              <Button
-                onClick={handleClickOrder}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {showOrder ? "戻る" :"購入"}
-              </Button>
+                <Button
+                  onClick={handleClickOrder}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {showOrder ? "戻る" : "購入"}
+                </Button>
               ) : <></>}
             </Box>
 
@@ -142,7 +143,7 @@ const Customer = () => {
       >
         <Profile handleSaveProfile={handleSaveProfile} />
       </Drawer>
-      <Box sx={{paddingTop: 7}}>
+      <Box sx={{ paddingTop: 7 }}>
         {showOrder ? <Order /> : <Asset />}
       </Box>
     </>

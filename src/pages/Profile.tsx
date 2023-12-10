@@ -14,7 +14,7 @@ interface ProfileProps {
   handleSaveProfile: () => void;
 }
 
-const Profile = ({handleSaveProfile} : ProfileProps) => {
+const Profile = ({ handleSaveProfile }: ProfileProps) => {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth0();
   const { register, control, handleSubmit, reset } = useForm<FormInput>();
@@ -40,9 +40,9 @@ const Profile = ({handleSaveProfile} : ProfileProps) => {
     // console.log("data: ", data);
 
     if (await userExists(data.userid)) {
-      updateUser(data.userid, data.seed, data.wallet);
+      await updateUser(data.userid, data.seed, data.wallet);
     } else {
-      addUser(data.userid, data.seed, data.wallet);
+      await addUser(data.userid, data.seed, data.wallet);
     }
 
     handleSaveProfile();
@@ -64,38 +64,38 @@ const Profile = ({handleSaveProfile} : ProfileProps) => {
       {loading ? (
         <>Loading...</>
       ) : (
-      <Container maxWidth="sm" sx={{ pt: 5 }}>
-        <Stack spacing={3}>
-          <TextField required label="ユーザーID"  {...register('userid')} inputProps={{ readOnly: true }} defaultValue={user?.email} />
-          <Controller
-            name="wallet"
-            control={control}
-            rules={validationRules.wallet}
-            render={({ field, fieldState }) => (
-              <TextField required label="ウォレット"
-                {...field}
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-          <Controller
-            name="seed"
-            control={control}
-            rules={validationRules.seed}
-            render={({ field, fieldState }) => (
-              <TextField required label="シード"
-                {...field}
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-          <Button color="primary" variant="contained" size="large" onClick={handleSubmit(handleSubmitSave)}>
-            保存
-          </Button>
-        </Stack>
-      </Container>
+        <Container maxWidth="sm" sx={{ pt: 5 }}>
+          <Stack spacing={3}>
+            <TextField required label="ユーザーID"  {...register('userid')} inputProps={{ readOnly: true }} defaultValue={user?.email} />
+            <Controller
+              name="wallet"
+              control={control}
+              rules={validationRules.wallet}
+              render={({ field, fieldState }) => (
+                <TextField required label="ウォレット"
+                  {...field}
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="seed"
+              control={control}
+              rules={validationRules.seed}
+              render={({ field, fieldState }) => (
+                <TextField required label="シード"
+                  {...field}
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+            <Button color="primary" variant="contained" size="large" onClick={handleSubmit(handleSubmitSave)}>
+              保存
+            </Button>
+          </Stack>
+        </Container>
       )}
     </>
   )

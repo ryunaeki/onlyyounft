@@ -88,7 +88,7 @@ const CreateNft = ({ handleCreatedNft }: CreateNftProps) => {
             });
             console.log(res.data);
             ipfsUrl = 'ipfs://' + res.data.IpfsHash;
-            httpsUrl = 'https://ipfs.io/ipfs/' + res.data.IpfsHash;
+            httpsUrl = import.meta.env.VITE_PINATA_GATEWAY + res.data.IpfsHash;
         } catch (error) {
             console.log(error);
         }
